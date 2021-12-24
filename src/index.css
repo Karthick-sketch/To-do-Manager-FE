@@ -65,7 +65,9 @@ ul {
 }
 
 .TodoItem-container {
+  width: 68%;
   display: inline-flex;
+  justify-content: space-between;
   align-items: center;
   color: #453c52;
   padding: 6px 12px;
@@ -90,7 +92,6 @@ ul {
   border-color: transparent;
   background-color: transparent;
   visibility: hidden;
-  margin-left: 8px;
 }
 
 .TodoItem-delete img {

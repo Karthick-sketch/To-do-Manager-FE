@@ -43,13 +43,21 @@ function TodoItems(props) {
     }
   }
 
+  function isNotToday(todo) {
+    if (todo.completed) {
+      return <p className="TodoItem-dueDate">{todo.due_date}</p>
+    } else {
+      return null;
+    }
+  }
+
   const listItems = arr.map(todo =>
     <li key={todo.id}>
       <label className="TodoItem-container">
         <div>
           <form action={"#/" + String(todo.id)}>{checked(todo)}</form>
           {strickoutText(todo)}
-          <p className="TodoItem-dueDate">{todo.due_date}</p>
+          {isNotToday(todo)}
         </div>
         <form action="#">
           <button className="TodoItem-delete">
