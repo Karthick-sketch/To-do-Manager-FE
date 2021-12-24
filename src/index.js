@@ -16,37 +16,57 @@ function AddTodoForm() {
 
 function TodoItems(props) {
   const arr = props.data;
+
+  function checked(todo) {
+    if (todo.completed) {
+      return <input type="checkbox" name="completed" className="TodoItem-checkbox" onClick="this.form.submit()" checked/>;
+    } else {
+      return <input type="checkbox" name="completed" className="TodoItem-checkbox" onClick="this.form.submit()"/>;
+    }
+  }
+
+  function strickoutText(todo) {
+    if (todo.completed) {
+      return <p className="TodoItem-text">{todo.todo_text}</p>
+    } else {
+      return <p>{todo.todo_text}</p>
+    }
+  }
+
   const listItems = arr.map(todo =>
-  <li key={todo.id} className="TodoItem-container">
-    <div>
-      <form action={"#/" + String(todo.id)}>
-        <input type="checkbox" name="completed" value={todo.completed} className="TodoItem-checkbox" onClick="this.form.submit()"/>
+    <li key={todo.id} className="TodoItem-container">
+      <div>
+        <form action={"#/" + String(todo.id)}>{checked(todo)}</form>
+        {strickoutText(todo)}
+        <p className="TodoItem-dueDate">{todo.due_date}</p>
+      </div>
+      <form action="#">
+        <button className="TodoItem-delete">
+          <img src="trashcan.png" alt="Delete todo"/>
+        </button>
       </form>
-      <p {...todo.completed ? "class=TodoItem-text" : ""}>{todo.todo_text}</p>
-      <p className="TodoItem-dueDate">{todo.due_date}</p>
-    </div>
-    <form action="#" method="delete">
-      <button className="TodoItem-delete">
-        <img src="trashcan.png" alt="Delete todo"/>
-      </button>
-    </form>
-  </li>);
+    </li>
+  );
+
   return <ul className="TodoItem">{listItems}</ul>;
 }
 
 function TodoCategory(props) {
   const [todos, setTodos] = useState(props.data);
 
-  function isNotToday() {
-    return (
-      (!props.value) ? <p className="TodoSectionTitle-remainingCount">{todos.length}</p> : null
-    );
+  function completedTodosCount() {
+    let count = 0;
+    for (let i of props.data) {
+      if (i.completed) count++;
+    }
+
+    return count;
   }
 
   return <section className="TodoSection">
     <div className="TodoSectionTitle">
       <h4 className="TodoSectionTitle-text">{props.name}</h4>
-      {isNotToday}
+      <p className="TodoSectionTitle-remainingCount">{completedTodosCount()} / {todos.length}</p>
     </div>
     <TodoItems data={todos}/>
   </section>;
@@ -67,9 +87,9 @@ function TodoSections(props) {
 }
 
 const Todos = [
-  {id: 1, todo_text: "Buy movie ticket", due_date: "2021-12-25", completed: false},
-  {id: 2, todo_text: "Wash clothes", due_date: "2021-12-25", completed: false},
-  {id: 3, todo_text: "Watch No Way Home", due_date: "2021-12-25", completed: false}
+  {id: 1, todo_text: "Buy movie ticket", due_date: "2021-12-24", completed: true},
+  {id: 2, todo_text: "Wash clothes", due_date: "2021-12-24", completed: false},
+  {id: 3, todo_text: "Watch No Way Home", due_date: "2021-12-24", completed: true}
 ]
 
 ReactDOM.render(

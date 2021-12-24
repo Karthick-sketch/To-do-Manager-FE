@@ -46,15 +46,13 @@ body {
 }
 
 .TodoSectionTitle {
-  width: 14%;
   display: flex;
-  justify-content: space-between;
   color: #453c52;
   align-items: center;
 }
 
 .TodoSectionTitle-remainingCount {
-  font-size: 12px;
+  padding-left: 8px;
 }
 
 .TodoItem {
@@ -146,7 +144,7 @@ body {
   }
 
   .TodoItem-container {
-    display: flex;
+    display: inline-flex;
     justify-content: space-between;
   }
 
