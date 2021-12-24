@@ -19,9 +19,9 @@ function TodoItems(props) {
 
   function checked(todo) {
     if (todo.completed) {
-      return <input type="checkbox" name="completed" className="TodoItem-checkbox" onClick="this.form.submit()" checked/>;
+      return <input type="checkbox" name="completed" className="TodoItem-checkbox" checked/>;
     } else {
-      return <input type="checkbox" name="completed" className="TodoItem-checkbox" onClick="this.form.submit()"/>;
+      return <input type="checkbox" name="completed" className="TodoItem-checkbox"/>;
     }
   }
 
@@ -34,17 +34,19 @@ function TodoItems(props) {
   }
 
   const listItems = arr.map(todo =>
-    <li key={todo.id} className="TodoItem-container">
-      <div>
-        <form action={"#/" + String(todo.id)}>{checked(todo)}</form>
-        {strickoutText(todo)}
-        <p className="TodoItem-dueDate">{todo.due_date}</p>
-      </div>
-      <form action="#">
-        <button className="TodoItem-delete">
-          <img src="trashcan.png" alt="Delete todo"/>
-        </button>
-      </form>
+    <li key={todo.id}>
+      <label className="TodoItem-container">
+        <div>
+          <form action={"#/" + String(todo.id)}>{checked(todo)}</form>
+          {strickoutText(todo)}
+          <p className="TodoItem-dueDate">{todo.due_date}</p>
+        </div>
+        <form action="#">
+          <button className="TodoItem-delete">
+            <img src="trashcan.png" alt="Delete todo"/>
+          </button>
+        </form>
+      </label>
     </li>
   );
 
@@ -87,10 +89,10 @@ function TodoSections(props) {
 }
 
 const Todos = [
-  {id: 1, todo_text: "Buy movie ticket", due_date: "2021-12-24", completed: true},
+  {id: 1, todo_text: "Buy movie ticket", due_date: "2021-12-24", completed: false},
   {id: 2, todo_text: "Wash clothes", due_date: "2021-12-24", completed: false},
-  {id: 3, todo_text: "Watch No Way Home", due_date: "2021-12-24", completed: true}
-]
+  {id: 3, todo_text: "Watch No Way Home", due_date: "2021-12-24", completed: false}
+];
 
 ReactDOM.render(
   <article className="Todo-container">
