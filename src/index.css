@@ -19,7 +19,6 @@ ul {
   display: flex;
   height: 32px;
   align-items: stretch;
-  margin-bottom: 24px;
 }
 
 .AddTodo-text {
