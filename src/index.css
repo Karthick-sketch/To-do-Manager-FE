@@ -1,13 +1,161 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: sans-serif;
+  max-width: 600px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.TodoPage-content {
+  margin-left: 8px;
+}
+
+.AddTodo {
+  display: flex;
+  height: 32px;
+  align-items: stretch;
+  margin-bottom: 24px;
+}
+
+.AddTodo-text {
+  color: #453c52;
+  font-size: 14px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-right: 10px;
+}
+
+.AddTodo-date {
+  color: #453c52;
+  font-size: 14px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  padding: 6px;
+  margin-right: 10px;
+}
+
+.AddTodo-button {
+  font-size: 14px;
+  color: white;
+  background-color: #48bb78;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 6px 22px;
+}
+
+.TodoSectionTitle {
+  width: 14%;
+  display: flex;
+  justify-content: space-between;
+  color: #453c52;
+  align-items: center;
+}
+
+.TodoSectionTitle-remainingCount {
+  font-size: 12px;
+}
+
+.TodoItem {
+  margin: 0%;
+  padding-left: 16px;
+  align-items: center;
+}
+
+.TodoItem-container {
+  display: inline-flex;
+  align-items: center;
+  color: #453c52;
+  padding: 6px 12px;
+}
+
+.TodoItem-container div {
+  display: flex;
+  align-items: center;
+}
+
+.TodoItem-checkbox {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.TodoItem-text {
+  text-decoration: line-through;
+}
+
+.TodoItem-delete {
+  border-color: transparent;
+  background-color: transparent;
+  visibility: hidden;
+  margin-left: 8px;
+}
+
+.TodoItem-delete img {
+  width: 24px;
+}
+
+.TodoItem-dueDate {
+  color: #726a7e;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.TodoItem-container:hover {
+  background-color: #f1edf7;
+}
+
+.TodoItem-container:hover .TodoItem-delete {
+  visibility: visible;
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    margin: 0;
+  }
+
+  .Todo-container {
+    padding: 0px 0.75rem;
+  }
+
+  .AddTodo {
+    display: block;
+    height: 100%;
+    margin: 0;
+  }
+
+  .AddTodo div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.625rem;
+  }
+
+  .AddTodo-text {
+    width: 50%;
+    margin-right: 0;
+  }
+
+  .AddTodo-date {
+    width: 36%;
+    margin-right: 0;
+  }
+
+  .AddTodo-button {
+    width: 100%;
+  }
+
+  .TodoItem-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .TodoItem-container div {
+    display: flex;
+    align-items: center;
+  }
+
+  .TodoItem-delete {
+    visibility: visible;
+  }
 }
