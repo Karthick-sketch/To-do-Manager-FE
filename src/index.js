@@ -16,8 +16,8 @@ function AddTodoForm() {
 
 const Todos = [
   {id: 1, todo_text: "Buy movie ticket", due_date: "2021-12-24", completed: false},
-  {id: 2, todo_text: "Wash clothes", due_date: "2021-12-24", completed: false},
-  {id: 3, todo_text: "Watch No Way Home", due_date: "2021-12-24", completed: false}
+  {id: 2, todo_text: "Wash clothes", due_date: "2021-12-25", completed: false},
+  {id: 3, todo_text: "Watch No Way Home", due_date: "2021-12-26", completed: false}
 ];
 
 ReactDOM.render(
