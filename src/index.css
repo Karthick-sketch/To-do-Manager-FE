@@ -84,10 +84,6 @@ ul {
   margin-right: 10px;
 }
 
-.TodoItem-text {
-  text-decoration: line-through;
-}
-
 .TodoItem-delete {
   border-color: transparent;
   background-color: transparent;
