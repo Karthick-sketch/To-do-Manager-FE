@@ -5,9 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <article className="Todo-container">
+	  <h1>My To-do List</h1>
+    <App/>
+  </article>,
   document.getElementById('root')
 );
 
