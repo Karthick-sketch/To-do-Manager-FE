@@ -17,11 +17,11 @@ ul {
 
 .AddTodo {
   display: flex;
-  height: 32px;
-  align-items: stretch;
+  justify-content: space-between;
 }
 
 .AddTodo-text {
+  width: 50%;
   color: #453c52;
   font-size: 14px;
   border: 1px solid grey;
@@ -48,6 +48,10 @@ ul {
   padding: 6px 22px;
 }
 
+.AddTodo-button:hover {
+  cursor: pointer;
+}
+
 .TodoSectionTitle {
   display: flex;
   color: #453c52;
@@ -65,7 +69,7 @@ ul {
 }
 
 .TodoItem-container {
-  width: 68%;
+  width: 95%;
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
@@ -117,26 +121,25 @@ ul {
     padding: 0px 0.75rem;
   }
 
-  .AddTodo {
-    display: block;
-    height: 100%;
-    margin: 0;
+  .TodoItem {
+    padding-left: 0%;
   }
 
-  .AddTodo div {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.625rem;
+  .AddTodo {
+    display: block;
   }
 
   .AddTodo-text {
-    width: 50%;
+    width: 45%;
+    float: left;
     margin-right: 0;
   }
 
   .AddTodo-date {
-    width: 36%;
+    float: right;
+    width: 40%;
     margin-right: 0;
+    margin-bottom: 8px;
   }
 
   .AddTodo-button {

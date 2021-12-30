@@ -6,10 +6,21 @@ const api = axios.create({ baseURL: "http://localhost:8080/" });
 
 function TodoItems(props) {
   async function handleDelete(id) {
-    const data = await api.delete(`todo/${id}`);
-    if (data.status === 200) {
-      props.getRequest();
-    }
+    try {
+      const data = await api.delete(`todo/${id}`);
+      if (data.status === 200) {
+        props.getRequest();
+      }
+    } catch(error) { console.log(error); }
+  }
+
+  async function handleComplete(id) {
+    try {
+      const data = await api.patch(`todo/${id}`);
+      if (data.status === 200) {
+        props.getRequest();
+      }
+    } catch(error) { console.log(error); }
   }
 
   function isNotToday(due_date) {
@@ -21,10 +32,8 @@ function TodoItems(props) {
     <li key={todo.id}>
       <label className="TodoItem-container">
         <div>
-          <form action={String(todo.id)}>
-            <input type="checkbox" name="completed" className="TodoItem-checkbox"/>
-          </form>
-          <p>{todo.todo_text}</p>
+          <input type="checkbox" name="completed" className="TodoItem-checkbox" onClick={() => handleComplete(todo.id)} checked={todo.completed}/>
+          <p style={{textDecoration : (todo.completed ? 'line-through' : 'none')}}>{todo.todo_text}</p>
           {isNotToday(todo.due_date)}
         </div>
         <button className="TodoItem-delete" onClick={() => handleDelete(todo.id)}>
@@ -61,12 +70,14 @@ class AddTodoForm extends React.Component {
 
   handleSubmit = async () => {
     if (this.state.todo_text !== "" && this.state.due_date !== "") {
-      let res = await api.post("todo", this.state);
-      if (res.status === 200) {
-        this.props.data();
-        document.getElementsByClassName('AddTodo-text')[0].value = "";
-        document.getElementsByClassName('AddTodo-date')[0].value = "";
-      }
+      try {
+        let res = await api.post("todo", this.state);
+        if (res.status === 200) {
+          this.props.data();
+          document.getElementsByClassName('AddTodo-text')[0].value = "";
+          document.getElementsByClassName('AddTodo-date')[0].value = "";
+        }
+      } catch(error) { console.log(error); }
     }
   }
 
@@ -100,12 +111,14 @@ class App extends React.Component {
   }
 
   getTodos = async () => {
-    let data = await api.get("todos").then(({data}) => data);
-    this.setState({
-      overdue: data.filter(todo => todo.due_date < this.today),
-      due_today: data.filter(todo => todo.due_date === this.today), 
-      due_later: data.filter(todo => todo.due_date > this.today)
-    })
+    try {
+      let data = await api.get("todos").then(({data}) => data);
+      this.setState({
+        overdue: data.filter(todo => todo.due_date < this.today),
+        due_today: data.filter(todo => todo.due_date === this.today), 
+        due_later: data.filter(todo => todo.due_date > this.today)
+      })
+    } catch(error) { console.log(error); }
   }
 
   render() {
