@@ -6,18 +6,18 @@ import "./User.css"
 // const api = axios.create({ baseURL: "http://localhost:8080/" });
 
 function Signin() {
-    return <div class="User-session">
-        <p class="NewUser-title">Sign In</p>
-        <section class="UsersNew">
-            <div class="Form-section">
-                <p class="FormInput-label">Email: </p>
+    return <div className="User-session">
+        <p className="NewUser-title">Sign In</p>
+        <section className="UsersNew">
+            <div className="Form-section">
+                <p className="FormInput-label">Email: </p>
                 <input type="email" name="email" className="Form-input" autoFocus/>
             </div>
-            <div class="Form-section">
-                <p class="FormInput-label">Password: </p>
+            <div className="Form-section">
+                <p className="FormInput-label">Password: </p>
                 <input type="password" name="password" className="Form-input"/>
             </div>
-            <div class="Form-section">
+            <div className="Form-section">
                 <button className="Form-submit">Sign In</button>
             </div>
             <Link to="/signup">Create new account</Link>
@@ -27,22 +27,22 @@ function Signin() {
 
 
 function Signup() {
-    return <div class="User-session">
-        <p class="NewUser-title">Welcome new user</p>
-        <section class="UsersNew">
-            <div class="Form-section">
-                <p class="FormInput-label">Full Name: </p>
+    return <div className="User-session">
+        <p className="NewUser-title">Welcome new user</p>
+        <section className="UsersNew">
+            <div className="Form-section">
+                <p className="FormInput-label">Full Name: </p>
                 <input type="text" name="first_name" className="Form-input" autoFocus/>
             </div>
-            <div class="Form-section">
-                <p class="FormInput-label">Email: </p>
+            <div className="Form-section">
+                <p className="FormInput-label">Email: </p>
                 <input type="email" name="email" className="Form-input"/>
             </div>
-            <div class="Form-section">
-                <p class="FormInput-label">Password: </p>
+            <div className="Form-section">
+                <p className="FormInput-label">Password: </p>
                 <input type="password" name="password" className="Form-input"/>
             </div>
-            <div class="Form-section">
+            <div className="Form-section">
                 <button className="Form-submit">Sign Up</button>
             </div>
             <Link to="/signin">Already have an account</Link>

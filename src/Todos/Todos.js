@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './Todo.css';
+import { Link } from 'react-router-dom';
 
 const api = axios.create({ baseURL: "http://localhost:8080/" });
 
@@ -32,7 +33,7 @@ function TodoItems(props) {
     <li key={todo.id}>
       <label className="TodoItem-container">
         <div>
-          <input type="checkbox" name="completed" className="TodoItem-checkbox" onClick={() => handleComplete(todo.id)} checked={todo.completed}/>
+          <input type="checkbox" name="completed" className="TodoItem-checkbox" onChange={() => handleComplete(todo.id)} checked={todo.completed}/>
           <p style={{textDecoration : (todo.completed ? 'line-through' : 'none')}}>{todo.todo_text}</p>
           {isNotToday(todo.due_date)}
         </div>
@@ -101,8 +102,7 @@ class AddTodoForm extends React.Component {
 }
 
 class Todo extends React.Component {
-  date = new Date();
-  today = this.date.getFullYear() + "-" + (this.date.getMonth()+1) + "-" + this.date.getDate();
+  today = (new Date().toISOString()).slice(0, 10);
   state = { overdue: [], due_today: [], due_later: [] }
 
   constructor() {
@@ -124,7 +124,11 @@ class Todo extends React.Component {
   render() {
     return (
       <article className="Todo-container">
-        <h1>My To-do List</h1>
+        <div className="Todo-head">
+          <h1>My To-do List</h1>
+          <Link to="/signin" className="Signout-button">Sign out</Link>
+        </div>
+          <hr/>
         <div className="TodoPage-content">
           <AddTodoForm data={this.getTodos}/> <br/>
           <div>
