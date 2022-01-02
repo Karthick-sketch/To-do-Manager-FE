@@ -4,13 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <article className="Todo-container">
-	  <h1>My To-do List</h1>
-    <App/>
-  </article>,
-  document.getElementById('root')
-);
+ReactDOM.render(<App/>, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
