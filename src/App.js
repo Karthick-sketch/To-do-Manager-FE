@@ -30,7 +30,7 @@ function App() {
         <Route path="/todos" element={<Todos/>} />
       </Routes>
     </Router>
-  )
+  );
 }
 
 export default App;

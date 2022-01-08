@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Todo.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const api = axios.create({ baseURL: "http://localhost:8080/" });
 
@@ -44,7 +44,7 @@ function TodoItems(props) {
     </li>
   );
 
-  return <ul className="TodoItem">{listItems}</ul>;
+  return (<ul className="TodoItem">{listItems}</ul>);
 }
 
 function TodoCategory(props) {
@@ -57,17 +57,19 @@ function TodoCategory(props) {
     return count;
   }
 
-  return <section className="TodoSection">
-    <div className="TodoSectionTitle">
-      <h4 className="TodoSectionTitle-text">{props.name}</h4>
-      <p className="TodoSectionTitle-remainingCount">{completedTodosCount()} / {props.data.length}</p>
-    </div>
-    <TodoItems getRequest={props.getRequest} data={props.data} value={props.value}/>
-  </section>;
+  return (
+    <section className="TodoSection">
+      <div className="TodoSectionTitle">
+        <h4 className="TodoSectionTitle-text">{props.name}</h4>
+        <p className="TodoSectionTitle-remainingCount">{completedTodosCount()} / {props.data.length}</p>
+      </div>
+      <TodoItems getRequest={props.getRequest} data={props.data} value={props.value}/>
+    </section>
+  );
 }
 
 class AddTodoForm extends React.Component {
-  state = { todo_text: "", due_date: "" }
+  state = { todo_text: "", due_date: "", user_id: localStorage.getItem("user_id") }
 
   handleSubmit = async () => {
     if (this.state.todo_text !== "" && this.state.due_date !== "") {
@@ -93,53 +95,77 @@ class AddTodoForm extends React.Component {
   }
 
   render() {
-    return <div className="AddTodo">
-      <input type="text" className="AddTodo-text" placeholder="What's next?" onChange={this.handleTodoText} autoComplete="off" autoFocus/>
-      <input type="date" className="AddTodo-date" onChange={this.handleDueDate}/>
-      <button className="AddTodo-button" onClick={this.handleSubmit}>Add</button>
-    </div>;
+    return (
+      <div className="AddTodo">
+        <input type="text" className="AddTodo-text" placeholder="What's next?" onChange={this.handleTodoText} autoComplete="off" autoFocus/>
+        <input type="date" className="AddTodo-date" onChange={this.handleDueDate}/>
+        <button className="AddTodo-button" onClick={this.handleSubmit}>Add</button>
+      </div>
+    );
   }
 }
 
-class Todo extends React.Component {
-  today = (new Date().toISOString()).slice(0, 10);
-  state = { overdue: [], due_today: [], due_later: [] }
+function Todo() {
+  const navigate = useNavigate();
 
-  constructor() {
-    super();
-    this.getTodos();
+  const today = (new Date().toISOString()).slice(0, 10);
+  const [overdue, setOverdue] = useState([]);
+  const [due_today, setDueToday] = useState([]);
+  const [due_later, setDueLater] = useState([]);
+
+  function navigateTo(path) { navigate(path); }
+
+  useEffect(() => {
+    if (localStorage.getItem("user_id") != null) {
+      if (getUser()) { getTodos(); }
+      else { navigateTo("/signin"); }
+    } else { navigateTo("/signin"); }
+  }, []);
+
+  async function getUser() {
+    try {
+      let user_id = localStorage.getItem("user_id");
+      if (user_id !== null) {
+        let data = await api.get(`user/${user_id}`).then((data) => data);
+        if (data.name === localStorage.getItem("user_name")) {
+          return true;
+        }
+      }
+    } catch (error) { console.log(error); }
+    return false;
   }
 
-  getTodos = async () => {
+  async function getTodos() {
     try {
-      let data = await api.get("todos").then(({data}) => data);
-      this.setState({
-        overdue: data.filter(todo => todo.due_date < this.today),
-        due_today: data.filter(todo => todo.due_date === this.today), 
-        due_later: data.filter(todo => todo.due_date > this.today)
-      })
+      let data = await api.get(`todos/${localStorage.getItem("user_id")}`).then(({data}) => data);
+      setOverdue(data.filter(todo => todo.due_date < today));
+      setDueToday(data.filter(todo => todo.due_date === today));
+      setDueLater(data.filter(todo => todo.due_date > today));
     } catch(error) { console.log(error); }
   }
 
-  render() {
-    return (
-      <article className="Todo-container">
-        <div className="Todo-head">
-          <h1>My To-do List</h1>
-          <Link to="/signin" className="Signout-button">Sign out</Link>
-        </div>
-          <hr/>
-        <div className="TodoPage-content">
-          <AddTodoForm data={this.getTodos}/> <br/>
-          <div>
-            <TodoCategory getRequest={this.getTodos} data={this.state.overdue} name="Overdue" value={true}/>
-            <TodoCategory getRequest={this.getTodos} data={this.state.due_today} name="Due Today" value={false}/>
-            <TodoCategory getRequest={this.getTodos} data={this.state.due_later} name="Due Later" value={true}/>
-          </div>
-        </div>
-      </article>
-    );
+  function handleSignout() {
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user_name");
   }
+
+  return (
+    <article className="Todo-container">
+      <div className="Todo-head">
+        <h1>{localStorage.getItem("user_name")}'s To-do List</h1>
+        <Link to="/signin" onClick={handleSignout} className="Signout-button">Sign out</Link>
+      </div>
+        <hr/>
+      <div className="TodoPage-content">
+        <AddTodoForm data={getTodos}/> <br/>
+        <div>
+          <TodoCategory getRequest={getTodos} data={overdue} name="Overdue" value={true}/>
+          <TodoCategory getRequest={getTodos} data={due_today} name="Due Today" value={false}/>
+          <TodoCategory getRequest={getTodos} data={due_later} name="Due Later" value={true}/>
+        </div>
+      </div>
+    </article>
+  );
 }
 
 export default Todo;
